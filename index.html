@@ -34,28 +34,6 @@
             overflow-x: hidden;
         }
         
-        /* Custom Cursor */
-        .cursor {
-            width: 8px;
-            height: 8px;
-            background: var(--accent-color);
-            border-radius: 50%;
-            position: fixed;
-            pointer-events: none;
-            z-index: 999;
-        }
-        
-        .cursor-follower {
-            width: 40px;
-            height: 40px;
-            border: 2px solid var(--accent-color);
-            border-radius: 50%;
-            position: fixed;
-            pointer-events: none;
-            z-index: 999;
-            transition: transform 0.1s;
-        }
-        
         /* Navigation */
         header {
             position: fixed;
@@ -376,6 +354,18 @@
         @media (max-width: 768px) {
             .nav-items {
                 display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: var(--primary-color);
+                padding: 1rem;
+                flex-direction: column;
+                align-items: center;
+            }
+        
+            .nav-items.active {
+                display: flex;
             }
         
             .glitch {
@@ -437,6 +427,18 @@
                 content: '';
                 top: 8px;
             }
+
+            .menu-btn.active .menu-btn__lines {
+                background: transparent;
+            }
+
+            .menu-btn.active .menu-btn__lines::before {
+                transform: rotate(45deg) translate(5px, 5px);
+            }
+
+            .menu-btn.active .menu-btn__lines::after {
+                transform: rotate(-45deg) translate(5px, -5px);
+            }
         }
 
         /* Floating WhatsApp Button */
@@ -467,9 +469,6 @@
     </style>
 </head>
 <body>
-    <div class="cursor"></div>
-    <div class="cursor-follower"></div>
-
     <header>
         <nav>
             <div class="logo">AM</div>
@@ -594,32 +593,6 @@
     </a>
 
     <script>
-        // Custom cursor
-        const cursor = document.querySelector('.cursor');
-        const cursorFollower = document.querySelector('.cursor-follower');
-        
-        document.addEventListener('mousemove', (e) => {
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
-            
-            cursorFollower.style.left = e.clientX - 20 + 'px';
-            cursorFollower.style.top = e.clientY - 20 + 'px';
-        });
-        
-        // Hover effect for links
-        const links = document.querySelectorAll('a');
-        links.forEach(link => {
-            link.addEventListener('mouseenter', () => {
-                cursor.style.transform = 'scale(1.5)';
-                cursorFollower.style.transform = 'scale(1.5)';
-            });
-            
-            link.addEventListener('mouseleave', () => {
-                cursor.style.transform = 'scale(1)';
-                cursorFollower.style.transform = 'scale(1)';
-            });
-        });
-        
         // Smooth scrolling
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
